@@ -2,41 +2,10 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DataImporter"
-        mc:Ignorable="d"
-        Title="Import Depth Value" Height="350" Width="700">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"></RowDefinition>
-            <RowDefinition Height="0.8*"></RowDefinition>
-            <RowDefinition Height="0.1*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="10">
-            <StackPanel Margin="10" Orientation="Horizontal" Height="20">
-                <TextBlock Width="200">Depth Value Files</TextBlock>
-                <TextBox IsEnabled="False" Width="400"></TextBox>
-                <Button Width="20" Height="20">...</Button>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal" Height="20">
-                <TextBlock Width="200">Cell Size Easting</TextBlock>
-                <TextBox Width="70" Margin="0,0,10,0"></TextBox>
-                <TextBlock>[ft]</TextBlock>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal" Height="20">
-                <TextBlock Width="200">Cell Size Northing</TextBlock>
-                <TextBox Width="70" Margin="0,0,10,0"></TextBox>
-                <TextBlock>[ft]</TextBlock>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal" Height="20">
-                <TextBlock Width="200">Inline Node Count</TextBlock>
-                <TextBox IsEnabled="False" Width="30"></TextBox>
-            </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal" Height="20">
-                <TextBlock Width="200">Crossline Node Count</TextBlock>
-                <TextBox IsEnabled="False" Width="30"></TextBox>
-            </StackPanel>
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:views="clr-namespace:DataImporter.Views"
+        Title="Data Importer" Height="350" Width="700">
+  <Window.Resources>
+  </Window.Resources>
+  <views:DataImporterView></views:DataImporterView>
 
-        </StackPanel>
-    </Grid>
 </Window>

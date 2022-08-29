@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="DataImporter.Views.DataImporterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataImporter.Views" xmlns:viewmodel="clr-namespace:DataImporter.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:DataImporterViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid Background="White">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="0.1*"></RowDefinition>
+      <RowDefinition Height="0.8*"></RowDefinition>
+      <RowDefinition Height="0.1*"></RowDefinition>
+    </Grid.RowDefinitions>
+    <StackPanel Grid.Row="1" HorizontalAlignment="Left" Margin="10">
+      <StackPanel Margin="10" Orientation="Horizontal" Height="20">
+        <TextBlock Width="200">Depth Value Files</TextBlock>
+        <TextBox IsEnabled="False" Width="400" Text="{Binding ImportFilePath}" ></TextBox>
+        <Button Width="20" Height="20">...</Button>
+      </StackPanel>
+      <StackPanel Margin="10" Orientation="Horizontal" Height="20">
+        <TextBlock Width="200">Cell Size Easting</TextBlock>
+        <TextBox Width="70" Margin="0,0,10,0" Text="{Binding CellSizeEasting, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+        <TextBox Width="70" Margin="0,0,10,0" Text="{Binding CellSizeEasting, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <TextBlock>[ft]</TextBlock>
+      </StackPanel>
+      <StackPanel Margin="10" Orientation="Horizontal" Height="20">
+        <TextBlock Width="200">Cell Size Northing</TextBlock>
+        <TextBox Width="70" Margin="0,0,10,0" Text="{Binding CellSizeNorthing}"></TextBox>
+        <TextBlock>[ft]</TextBlock>
+      </StackPanel>
+      <StackPanel Margin="10" Orientation="Horizontal" Height="20">
+        <TextBlock Width="200">Inline Node Count</TextBlock>
+        <TextBox IsEnabled="False" Width="30" Text="{Binding InlineNodeCount, Mode=OneWay}"></TextBox>
+      </StackPanel>
+      <StackPanel Margin="10" Orientation="Horizontal" Height="20">
+        <TextBlock Width="200">Crossline Node Count</TextBlock>
+        <TextBox IsEnabled="False" Width="30" Text="{Binding CrossLineNodeCount, Mode=OneWay}"></TextBox>
+      </StackPanel>
+
+    </StackPanel>
+  </Grid>
+</UserControl>
