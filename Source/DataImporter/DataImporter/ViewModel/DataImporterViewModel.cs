@@ -1,4 +1,7 @@
 ﻿using DataImporter.Helpers;
+using DataImporter.Model;
+using DataImporter.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +14,7 @@ using System.Windows.Input;
 
 namespace DataImporter.ViewModel
 {
-    public class DataImporterViewModel : INotifyPropertyChanged
+    internal class DataImporterViewModel : BaseViewModel
     {
         private string m_ImportFilePath = "Select the file to import...";
         private double m_CellSizeEasting = 0;
@@ -46,7 +49,7 @@ namespace DataImporter.ViewModel
         }
         public int InlineNodeCount { get; set; } = 0;
         public int CrossLineNodeCount { get; set; } = 0;
-        public ICommand ImportFileCommand
+        public ICommand? ImportFileCommand
         {
             get
             {
@@ -58,22 +61,19 @@ namespace DataImporter.ViewModel
             }
         }
 
-        public DataImporterViewModel()
+        public DataImporterViewModel(IGridFromDepthService gridFromDepthService)
         {
-
+            m_GridFromDepthService = gridFromDepthService;
         }
 
-        private ICommand m_ImportFileCommand;
+        private ICommand? m_ImportFileCommand;
+        private readonly IGridFromDepthService m_GridFromDepthService;
 
         private void Import()
         {
-            MessageBox.Show($"it works {CellSizeEasting}");
-        }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ImportFilePath? t = new ImportFilePath(m_GridFromDepthService);
+            MessageBox.Show($"it works {CellSizeEasting} {t.ReadFile("test")}");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataImporter.ViewModel;
+﻿using DataImporter.Services;
+using DataImporter.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,13 @@ namespace DataImporter
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        private readonly IGridFromDepthService m_SampleService;
+
+        public MainWindow(IGridFromDepthService gridFromDepthService)
         {
-            this.DataContext = new DataImporterViewModel();
+            m_SampleService = gridFromDepthService;
+            DataContext = new DataImporterViewModel(gridFromDepthService);
             InitializeComponent();
         }
     }

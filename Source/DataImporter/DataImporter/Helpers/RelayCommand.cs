@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,36 +11,32 @@ namespace DataImporter.Helpers
 
     public class RelayCommand : ICommand
     {
-        private Action<object> execute;
-        private Func<object, bool> canExecute;
-
-        public RelayCommand(Action<object> execute)
+        #region Fields 
+        readonly Action<object> _execute;
+        readonly Predicate<object> _canExecute;
+        #endregion // Fields 
+        #region Constructors 
+        public RelayCommand(Action<object> execute) : this(execute, null) { }
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            this.execute = execute;
-            this.canExecute = null;
+            if (execute == null)
+                throw new ArgumentNullException("execute");
+            _execute = execute; _canExecute = canExecute;
         }
-
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute)
+        #endregion // Constructors 
+        #region ICommand Members 
+        [DebuggerStepThrough]
+        public bool CanExecute(object parameter)
         {
-            this.execute = execute;
-            this.canExecute = canExecute;
+            return _canExecute == null ? true : _canExecute(parameter);
         }
-
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
-        public bool CanExecute(object parameter)
-        {
-            return this.canExecute == null || this.CanExecute(parameter);
-        }
-
-        public void Execute(object parameter)
-        {
-            this.execute(parameter);
-        }
+        public void Execute(object parameter) { _execute(parameter); }
+        #endregion // ICommand Members 
     }
 
 }
