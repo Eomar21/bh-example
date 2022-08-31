@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace DataImporter.ViewModel
+namespace DataImporter.Model
 {
-    internal class BaseModel : INotifyPropertyChanged
+    internal class BaseObserver : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")

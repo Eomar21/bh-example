@@ -1,19 +1,6 @@
 ﻿using DataImporter.Services;
 using DataImporter.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DataImporter
 {
@@ -24,11 +11,13 @@ namespace DataImporter
     {
 
         private readonly IGridFromDepthService m_SampleService;
+        private readonly IFileProcessorService m_FileProcessorService;
 
-        public MainWindow(IGridFromDepthService gridFromDepthService)
+        public MainWindow(IGridFromDepthService gridFromDepthService, IFileProcessorService fileProcessorService)
         {
             m_SampleService = gridFromDepthService;
-            DataContext = new DataImporterViewModel(gridFromDepthService);
+            m_FileProcessorService = fileProcessorService;
+            DataContext = new DataImporterViewModel(m_SampleService, m_FileProcessorService);
             InitializeComponent();
         }
     }

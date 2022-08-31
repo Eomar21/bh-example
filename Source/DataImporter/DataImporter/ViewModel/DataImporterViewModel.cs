@@ -1,54 +1,34 @@
 ﻿using DataImporter.Helpers;
 using DataImporter.Model;
 using DataImporter.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Immutable;
 using System.Windows;
 using System.Windows.Input;
 
 namespace DataImporter.ViewModel
 {
-    internal class DataImporterViewModel : BaseViewModel
+    internal class DataImporterViewModel : BaseModel
     {
-        private string m_ImportFilePath = "Select the file to import...";
-        private double m_CellSizeEasting = 0;
-        private double m_CellSizeNorthing = 0;
+        private ICommand? m_ImportFileCommand;
+        private readonly IGridFromDepthService m_GridFromDepthService;
+        public readonly IFileProcessorService m_FileProcessorService;
 
-        public string ImportFilePath
+        private InputsDepthModel m_InputsDepthModel;
+        private OutputDepthModel m_OutputDepthModel;
+        private ICommand m_ExportFileCommand;
+        ImmutableList<Grid2D> m_ProcessedData;
+
+        public ICommand ExportFileCommand
         {
-            get => m_ImportFilePath;
-            set
+            get
             {
-                m_ImportFilePath = value;
-                NotifyPropertyChanged();
+                if (m_ExportFileCommand == null)
+                {
+                    return new RelayCommand(p => Export());
+                }
+                return m_ExportFileCommand;
             }
         }
-        public double CellSizeEasting
-        {
-            get => m_CellSizeEasting;
-            set
-            {
-                m_CellSizeEasting = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public double CellSizeNorthing
-        {
-            get => m_CellSizeNorthing;
-            set
-            {
-                m_CellSizeNorthing = value;
-                NotifyPropertyChanged();
-            }
-        }
-        public int InlineNodeCount { get; set; } = 0;
-        public int CrossLineNodeCount { get; set; } = 0;
         public ICommand? ImportFileCommand
         {
             get
@@ -61,19 +41,60 @@ namespace DataImporter.ViewModel
             }
         }
 
-        public DataImporterViewModel(IGridFromDepthService gridFromDepthService)
+        public InputsDepthModel InputsDepthModel { get => m_InputsDepthModel; set => m_InputsDepthModel = value; }
+        public OutputDepthModel OutputDepthModel { get => m_OutputDepthModel; set => m_OutputDepthModel = value; }
+
+        public DataImporterViewModel(IGridFromDepthService gridFromDepthService, IFileProcessorService fileProcessorService)
         {
             m_GridFromDepthService = gridFromDepthService;
+            m_FileProcessorService = fileProcessorService;
+            m_InputsDepthModel = new();
+            m_InputsDepthModel.CellSizeNorthing = 200;
+            m_InputsDepthModel.CellSizeEasting = 200;
+            m_OutputDepthModel = new();
+            m_ProcessedData = ImmutableList<Grid2D>.Empty;
+
         }
 
-        private ICommand? m_ImportFileCommand;
-        private readonly IGridFromDepthService m_GridFromDepthService;
+        private void Export()
+        {
+            // Configure save file dialog box
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".json"; // Default file extension
+            dialog.Filter = "Json File (.json)|*.json"; // Filter files by extension
+
+            // Show save file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                string filename = dialog.FileName;
+                m_FileProcessorService.ExportFile(filename, m_ProcessedData);
+            }
+        }
+
 
         private void Import()
         {
+            // Configure open file dialog box
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.FileName = "Document"; // Default file name
+            dialog.DefaultExt = ".txt"; // Default file extension
+            dialog.Filter = "CSV UTF-8(Comma delimited)(*.csv)|*.csv;"; // Filter files by extension
 
-            ImportFilePath? t = new ImportFilePath(m_GridFromDepthService);
-            MessageBox.Show($"it works {CellSizeEasting} {t.ReadFile("test")}");
+            // Show open file dialog box
+            bool? result = dialog.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                m_InputsDepthModel.ImportFilePath = dialog.FileName;
+                m_ProcessedData = m_FileProcessorService.ReadAndProcess(m_InputsDepthModel.ImportFilePath);
+            }
         }
     }
 }
