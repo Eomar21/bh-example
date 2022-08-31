@@ -8,8 +8,8 @@ namespace DataImporter.Services
 {
     public class Grid2D
     {
-        public int InlineCount { get; }
-        public int CrossLineCount { get; }
+        public int InlineIndex { get; }
+        public int CrossLineIndex { get; }
         public double Depth { get; }
         public double Easting { get; }
         public double Northing { get; }
@@ -17,10 +17,10 @@ namespace DataImporter.Services
         public double FluidContact { get; }
 
 
-        public Grid2D(int crossLineCount, int inlineCount, double depth)
+        public Grid2D(int crossLineIndex, int inlineIndex, double depth)
         {
-            CrossLineCount = crossLineCount;
-            InlineCount = inlineCount;
+            CrossLineIndex = crossLineIndex;
+            InlineIndex = inlineIndex;
             Depth = depth; //Top horizon
             BaseHorizon = depth - 328.084; // 100 meter in feet;
             Northing = 0;

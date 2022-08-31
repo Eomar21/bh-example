@@ -14,7 +14,7 @@ namespace DataImporter.Model
         public string ReadFile(string path)
         {
             Grid2D? t = gridFromDepthService.Create();
-            return t.InlineCount.ToString();
+            return t.InlineIndex.ToString();
         }
     }
 }

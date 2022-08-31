@@ -14,7 +14,7 @@ namespace DataImporter.Services
 {
     internal class FileProcessorService : IFileProcessorService
     {
-        public ImmutableList<Grid2D> ReadAndProcess(string path)
+        public ProcessedData ReadAndProcess(string path)
         {
             var list = ImmutableList<Grid2D>.Empty;
             var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
@@ -36,7 +36,9 @@ namespace DataImporter.Services
                     list = list.Add(new Grid2D(csvReader.Parser.Row - 1, csvReader.CurrentIndex, Convert.ToDouble(value)));
                 }
             }
-            return list;
+            int crossCount = list.Where(x => x.CrossLineIndex == 0).Count();
+            int inlineCount = list.Where(y => y.InlineIndex == 0).Count();
+            return new ProcessedData(crossCount, inlineCount, list);
         }
 
         public void ExportFile(string path, ImmutableList<Grid2D> data)

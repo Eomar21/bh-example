@@ -16,7 +16,7 @@ namespace DataImporter.ViewModel
         private InputsDepthModel m_InputsDepthModel;
         private OutputDepthModel m_OutputDepthModel;
         private ICommand m_ExportFileCommand;
-        ImmutableList<Grid2D> m_ProcessedData;
+        private ProcessedData m_ProcessedData;
 
         public ICommand ExportFileCommand
         {
@@ -52,8 +52,6 @@ namespace DataImporter.ViewModel
             m_InputsDepthModel.CellSizeNorthing = 200;
             m_InputsDepthModel.CellSizeEasting = 200;
             m_OutputDepthModel = new();
-            m_ProcessedData = ImmutableList<Grid2D>.Empty;
-
         }
 
         private void Export()
@@ -72,7 +70,7 @@ namespace DataImporter.ViewModel
             {
                 // Save document
                 string filename = dialog.FileName;
-                m_FileProcessorService.ExportFile(filename, m_ProcessedData);
+                m_FileProcessorService.ExportFile(filename, m_ProcessedData.Data);
             }
         }
 
@@ -94,6 +92,8 @@ namespace DataImporter.ViewModel
                 // Open document
                 m_InputsDepthModel.ImportFilePath = dialog.FileName;
                 m_ProcessedData = m_FileProcessorService.ReadAndProcess(m_InputsDepthModel.ImportFilePath);
+                m_OutputDepthModel.InlineNodeCount = m_ProcessedData.InLineCount;
+                m_OutputDepthModel.CrossLineNodeCount = m_ProcessedData.CrossLineCount;
             }
         }
     }
