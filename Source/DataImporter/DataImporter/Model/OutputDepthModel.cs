@@ -1,4 +1,6 @@
-﻿namespace DataImporter.Model
+﻿using System;
+
+namespace DataImporter.Model
 {
     internal class OutputDepthModel : BaseObserver
     {
@@ -33,9 +35,9 @@
             get => m_Volume;
             set
             {
-                m_Volume = value;
-                VolumeMeter = value / 3.2808;
-                VolumeUSBarrel = value * 0.17811;
+                m_Volume = Math.Round(value, 2);
+                VolumeMeter = Math.Round(value / 3.2808, 2);
+                VolumeUSBarrel = Math.Round(value * 0.17811, 2);
                 NotifyPropertyChanged();
             }
         }

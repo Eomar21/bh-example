@@ -12,7 +12,7 @@ namespace DataImporter.Services
         public double GetVolumeAboveFluidContact(ImmutableList<Grid2D> data, double fluidContact)
         {
             var t = data.Where(x => x.BaseHorizon >= fluidContact);
-            var x = t.Sum(x => x.Volume);
+            double x = t.Sum(x => x.Volume);
             return x;
         }
     }
