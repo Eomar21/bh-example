@@ -27,6 +27,7 @@ namespace DataImporter.ViewModel
                 return m_ExportFileCommand;
             }
         }
+
         public ICommand? ImportFileCommand
         {
             get
@@ -73,7 +74,6 @@ namespace DataImporter.ViewModel
                 m_FileProcessorService.ExportFile(filename, m_ProcessedData.Data);
             }
         }
-
 
         private void Import()
         {

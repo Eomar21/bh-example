@@ -13,7 +13,6 @@
         public double FluidContact { get; }
         public double Volume => GetVolume();
 
-
         public Grid2D(int crossLineIndex, int inlineIndex, double depth, double baseToTopDistance, double fluidContact, double crossLineInterval, double inLineInterval)
         {
             CrossLineIndex = crossLineIndex;

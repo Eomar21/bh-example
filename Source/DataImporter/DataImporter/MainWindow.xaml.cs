@@ -9,7 +9,6 @@ namespace DataImporter
     /// </summary>
     public partial class MainWindow : Window
     {
-
         private readonly IVolumeProcessorService m_SampleService;
         private readonly IFileProcessorService m_FileProcessorService;
 

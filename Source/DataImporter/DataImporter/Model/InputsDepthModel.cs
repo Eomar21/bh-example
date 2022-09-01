@@ -8,8 +8,6 @@
         private double m_BaseToTopDistance;
         private double m_FluidContact;
 
-
-
         public string ImportFilePath
         {
             get => m_ImportFilePath;
@@ -19,6 +17,7 @@
                 NotifyPropertyChanged();
             }
         }
+
         public double CellSizeEasting
         {
             get => m_CellSizeEasting;
@@ -28,6 +27,7 @@
                 NotifyPropertyChanged();
             }
         }
+
         public double CellSizeNorthing
         {
             get => m_CellSizeNorthing;
@@ -47,6 +47,7 @@
                 NotifyPropertyChanged();
             }
         }
+
         public double FluidContact
         {
             get => m_FluidContact;

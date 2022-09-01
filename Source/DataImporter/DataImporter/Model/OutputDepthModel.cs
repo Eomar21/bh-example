@@ -8,7 +8,6 @@
         private double m_VolumeMeter;
         private double m_VolumeUSBarrel;
 
-
         public int CrossLineNodeCount
         {
             get => m_CrossLineNodeCount;
@@ -18,6 +17,7 @@
                 NotifyPropertyChanged();
             }
         }
+
         public int InlineNodeCount
         {
             get => m_InlineNodeCount;
@@ -52,6 +52,7 @@
                 NotifyPropertyChanged();
             }
         }
+
         public double VolumeUSBarrel
         {
             get
@@ -66,4 +67,3 @@
         }
     }
 }
-

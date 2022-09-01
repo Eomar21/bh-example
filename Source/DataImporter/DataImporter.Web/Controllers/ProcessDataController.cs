@@ -8,12 +8,10 @@ namespace DataImporter.Web.Controllers
     [Route("/api/[controller]")]
     public class ProcessDataController : ControllerBase
     {
-
         private readonly ILogger<ProcessDataController> m_Logger;
         private readonly IFileProcessorService m_FileProcessorService;
         private readonly IVolumeProcessorService m_VolumeProcessorService;
         private static readonly string m_FileTemplate = Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).ToString(), @"Resources\data2x2.csv");
-
 
         public ProcessDataController(ILogger<ProcessDataController> logger, IFileProcessorService fileProcessorService, IVolumeProcessorService volumeProcessorService)
         {
