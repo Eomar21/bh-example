@@ -15,3 +15,9 @@
 
 # Exported JSON file with meta data example 
 ![image](https://user-images.githubusercontent.com/25548321/187957845-72500566-a76d-497b-9e35-4f505776adeb.png)
+
+
+
+# Resources Location 
+- CSV import example files can be found in \Documents\
+- JSON out files can be also found in \Documents\
