@@ -6,7 +6,7 @@ namespace DataImporter.Services
     {
         public static IServiceCollection WithCoreServices(this IServiceCollection services)
         {
-            services.AddScoped<IGridFromDepthService, GridFromDepthService>();
+            services.AddScoped<IVolumeProcessorService, VolumeProcessorService>();
             services.AddScoped<IFileProcessorService, FileProcessorService>();
             return services;
         }

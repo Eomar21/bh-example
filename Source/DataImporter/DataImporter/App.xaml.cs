@@ -2,12 +2,6 @@
 using DataImporter.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace DataImporter
@@ -35,7 +29,7 @@ namespace DataImporter
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<DataImporterViewModel>();
-            services.AddSingleton<BaseModel>();
+            services.AddSingleton<BaseViewModel>();
             services.AddTransient<MainWindow>();
             services.WithCoreServices();
 

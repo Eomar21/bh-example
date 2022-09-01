@@ -5,6 +5,10 @@
         private string m_ImportFilePath = "Select the file to import...";
         private double m_CellSizeEasting;
         private double m_CellSizeNorthing;
+        private double m_BaseToTopDistance;
+        private double m_FluidContact;
+
+
 
         public string ImportFilePath
         {
@@ -30,6 +34,25 @@
             set
             {
                 m_CellSizeNorthing = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public double BaseToTopDistance
+        {
+            get => m_BaseToTopDistance;
+            set
+            {
+                m_BaseToTopDistance = value;
+                NotifyPropertyChanged();
+            }
+        }
+        public double FluidContact
+        {
+            get => m_FluidContact;
+            set
+            {
+                m_FluidContact = value;
                 NotifyPropertyChanged();
             }
         }

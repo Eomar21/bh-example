@@ -10,10 +10,10 @@ namespace DataImporter
     public partial class MainWindow : Window
     {
 
-        private readonly IGridFromDepthService m_SampleService;
+        private readonly IVolumeProcessorService m_SampleService;
         private readonly IFileProcessorService m_FileProcessorService;
 
-        public MainWindow(IGridFromDepthService gridFromDepthService, IFileProcessorService fileProcessorService)
+        public MainWindow(IVolumeProcessorService gridFromDepthService, IFileProcessorService fileProcessorService)
         {
             m_SampleService = gridFromDepthService;
             m_FileProcessorService = fileProcessorService;

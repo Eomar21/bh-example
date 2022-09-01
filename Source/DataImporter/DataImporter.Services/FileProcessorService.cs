@@ -1,20 +1,14 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataImporter.Services
 {
     internal class FileProcessorService : IFileProcessorService
     {
-        public ProcessedData ReadAndProcess(string path)
+        public ProcessedData ReadAndProcess(string path, double topToBaseDistance, double fluidContact, double crossInterval, double inlineInterval)
         {
             var list = ImmutableList<Grid2D>.Empty;
             var csvConfig = new CsvConfiguration(CultureInfo.CurrentCulture)
@@ -30,10 +24,9 @@ namespace DataImporter.Services
 
             while (csvReader.Read())
             {
-
                 for (int i = 0; csvReader.TryGetField<string>(i, out value); i++)
                 {
-                    list = list.Add(new Grid2D(csvReader.Parser.Row - 1, csvReader.CurrentIndex, Convert.ToDouble(value)));
+                    list = list.Add(new Grid2D(csvReader.Parser.Row - 1, csvReader.CurrentIndex, Convert.ToDouble(value), topToBaseDistance, fluidContact, crossInterval, inlineInterval));
                 }
             }
             int crossCount = list.Where(x => x.CrossLineIndex == 0).Count();

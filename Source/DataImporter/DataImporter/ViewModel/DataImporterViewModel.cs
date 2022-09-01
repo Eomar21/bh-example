@@ -1,21 +1,19 @@
 ﻿using DataImporter.Helpers;
 using DataImporter.Model;
 using DataImporter.Services;
-using System.Collections.Immutable;
-using System.Windows;
 using System.Windows.Input;
 
 namespace DataImporter.ViewModel
 {
-    internal class DataImporterViewModel : BaseModel
+    internal class DataImporterViewModel : BaseViewModel
     {
-        private ICommand? m_ImportFileCommand;
-        private readonly IGridFromDepthService m_GridFromDepthService;
+        private readonly ICommand? m_ImportFileCommand;
+        private readonly IVolumeProcessorService m_VolumeProcessorService;
         public readonly IFileProcessorService m_FileProcessorService;
 
         private InputsDepthModel m_InputsDepthModel;
         private OutputDepthModel m_OutputDepthModel;
-        private ICommand m_ExportFileCommand;
+        private readonly ICommand m_ExportFileCommand;
         private ProcessedData m_ProcessedData;
 
         public ICommand ExportFileCommand
@@ -44,13 +42,15 @@ namespace DataImporter.ViewModel
         public InputsDepthModel InputsDepthModel { get => m_InputsDepthModel; set => m_InputsDepthModel = value; }
         public OutputDepthModel OutputDepthModel { get => m_OutputDepthModel; set => m_OutputDepthModel = value; }
 
-        public DataImporterViewModel(IGridFromDepthService gridFromDepthService, IFileProcessorService fileProcessorService)
+        public DataImporterViewModel(IVolumeProcessorService volumeProcessorService, IFileProcessorService fileProcessorService)
         {
-            m_GridFromDepthService = gridFromDepthService;
+            m_VolumeProcessorService = volumeProcessorService;
             m_FileProcessorService = fileProcessorService;
             m_InputsDepthModel = new();
             m_InputsDepthModel.CellSizeNorthing = 200;
             m_InputsDepthModel.CellSizeEasting = 200;
+            m_InputsDepthModel.FluidContact = 9842.52; // 3000 meter
+            m_InputsDepthModel.BaseToTopDistance = 328.084; // 100 meter
             m_OutputDepthModel = new();
         }
 
@@ -91,9 +91,10 @@ namespace DataImporter.ViewModel
             {
                 // Open document
                 m_InputsDepthModel.ImportFilePath = dialog.FileName;
-                m_ProcessedData = m_FileProcessorService.ReadAndProcess(m_InputsDepthModel.ImportFilePath);
+                m_ProcessedData = m_FileProcessorService.ReadAndProcess(m_InputsDepthModel.ImportFilePath, m_InputsDepthModel.BaseToTopDistance, m_InputsDepthModel.FluidContact, m_InputsDepthModel.CellSizeEasting, m_InputsDepthModel.CellSizeNorthing);
                 m_OutputDepthModel.InlineNodeCount = m_ProcessedData.InLineCount;
                 m_OutputDepthModel.CrossLineNodeCount = m_ProcessedData.CrossLineCount;
+                m_OutputDepthModel.Volume = m_VolumeProcessorService.GetVolumeAboveFluidContact(m_ProcessedData.Data, m_InputsDepthModel.FluidContact);
             }
         }
     }

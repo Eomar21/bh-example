@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace DataImporter.ViewModel
 {
-    internal class BaseModel : INotifyPropertyChanged
+    internal class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
